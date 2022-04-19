@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ВСЕ ЦВЕТА -->
+    <SolidColorBrush x:Key="Primary">#2196F3</SolidColorBrush>
+    <SolidColorBrush x:Key="BabyBlue">#e7f2f8</SolidColorBrush>
+    <SolidColorBrush x:Key="Aquamarine">#74bdcb</SolidColorBrush>
+    <SolidColorBrush x:Key="Salmon">#ffa384</SolidColorBrush>
+    <SolidColorBrush x:Key="Freesia">#efe7bc</SolidColorBrush>
+    <SolidColorBrush x:Key="Blue">#74BDCB</SolidColorBrush>
+
+</ResourceDictionary>

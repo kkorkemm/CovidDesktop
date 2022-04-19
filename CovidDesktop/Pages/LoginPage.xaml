@@ -1,0 +1,63 @@
+﻿<Page x:Class="CovidDesktop.Pages.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CovidDesktop.Pages"
+      mc:Ignorable="d" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Авторизация">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Image Source="/Images/Logo_Light.png"
+               Margin="50"
+               MaxHeight="350"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"/>
+
+        <StackPanel Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Margin="10, 0, 60, 0">
+            <TextBlock Text="Авторизация"
+                       FontFamily="Roboto"
+                       FontSize="26"
+                       FontWeight="Bold"
+                       TextAlignment="Center"/>
+
+            <StackPanel Margin="0, 30">
+                <TextBox x:Name="LoginText"
+                         Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                         materialDesign:HintAssist.Hint="Логин"
+                         Margin="10"/>
+                <PasswordBox x:Name="PasswordText"
+                         Style="{DynamicResource MaterialDesignFloatingHintPasswordBox}"
+                         materialDesign:HintAssist.Hint="Пароль"
+                             Margin="10"/>
+            </StackPanel>
+
+            <WrapPanel Orientation="Horizontal">
+                <Button x:Name="BtnLogin"
+                        Style="{StaticResource AquamarineButton}"
+                        Content="Войти"
+                        HorizontalAlignment="Left"
+                        Width="130"
+                        Margin="10"/>
+                <Button x:Name="BtnCancel"
+                        Style="{StaticResource BlueButton}"
+                        Content="Отмена"
+                        HorizontalAlignment="Right"
+                        Width="130"
+                        Margin="10"/>
+            </WrapPanel>
+            
+        </StackPanel>
+        
+        
+    </Grid>
+</Page>
