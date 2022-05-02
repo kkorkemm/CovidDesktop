@@ -1,0 +1,314 @@
+﻿<Page x:Class="CovidDesktop.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CovidDesktop.Pages"
+      xmlns:viewModel="clr-namespace:CovidDesktop.ViewModel"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" 
+      d:DesignWidth="800">
+
+    <Page.DataContext>
+        <viewModel:MainViewModel/>
+    </Page.DataContext>
+    
+    <Page.Resources>
+        <Style x:Name="ToggleButtonStyle"
+               TargetType="ToggleButton">
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="Brder"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="True"
+                                Cursor="Hand"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+    </Page.Resources>
+    
+    <Grid>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="NavBarGrid"
+              HorizontalAlignment="Left"
+              Width="230">
+
+            <StackPanel x:Name="NavBarPanel">
+
+                <!-- Кнопка меню -->
+                <ToggleButton x:Name="TglBtn"
+                              Width="23"
+                              Height="23"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Left"
+                              BorderThickness="0"
+                              Margin="28"
+                              IsChecked="True">
+
+                    <ToggleButton.Background>
+                        <ImageBrush ImageSource="../Images/menu.png"/>
+                    </ToggleButton.Background>
+
+                    <ToggleButton.Triggers>
+                        <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                            <BeginStoryboard>
+                                <Storyboard x:Name="HideStackPanel">
+                                    <DoubleAnimation Storyboard.TargetName="NavBarGrid"
+                                                     Storyboard.TargetProperty="Width"
+                                                     From="230" To="80"
+                                                     BeginTime="0:0:0"
+                                                     Duration="0:0:0.3"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                            <BeginStoryboard>
+                                <Storyboard x:Name="MinBtnExit">
+                                    <DoubleAnimation Storyboard.TargetName="BtnExit"
+                                                     Storyboard.TargetProperty="Width"
+                                                     From="130" To="40"
+                                                     BeginTime="0:0:0"
+                                                     Duration="0:0:0.3"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="ToggleButton.Checked">
+                            <BeginStoryboard>
+                                <Storyboard x:Name="ShowStackPanel">
+                                    <DoubleAnimation Storyboard.TargetName="NavBarGrid"
+                                                     Storyboard.TargetProperty="Width"
+                                                     From="80" To="230"
+                                                     BeginTime="0:0:0"
+                                                     Duration="0:0:0.3"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                            <BeginStoryboard>
+                                <Storyboard x:Name="MaxBtnExit">
+                                    <DoubleAnimation Storyboard.TargetName="BtnExit"
+                                                     Storyboard.TargetProperty="Width"
+                                                     From="40" To="130"
+                                                     BeginTime="0:0:0"
+                                                     Duration="0:0:0.3"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ToggleButton.Triggers>
+
+                </ToggleButton>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Image Source="../Images/Logo_Light.png"
+                           MaxHeight="150"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Margin="10"/>
+
+                    <StackPanel Grid.Row="1"
+                                VerticalAlignment="Center"
+                                Margin="0, 10">
+
+                        <RadioButton x:Name="BtnTimeTable"
+                                     IsChecked="True"
+                                     Command="{Binding TimeTableCommand}">
+                            <RadioButton.Style>
+                                <Style TargetType="RadioButton"
+                                       BasedOn="{StaticResource {x:Type ToggleButton}}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="RadioButton">
+                                                <StackPanel Orientation="Horizontal"
+                                                            Cursor="Hand"
+                                                            Background="{TemplateBinding Background}">
+
+                                                    <Image Source="../Images/calendar_icon.png"
+                                                           Width="23"
+                                                           Height="23"
+                                                           
+                                                           Margin="30, 10"/>
+
+                                                    <TextBlock Text="Расписание"
+                                                               VerticalAlignment="Center"/>
+
+                                                </StackPanel>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+
+                                    <Style.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="Background" Value="#F9F9F9"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                    
+                                </Style>
+                            </RadioButton.Style>
+                        </RadioButton>
+
+                        <RadioButton x:Name="BtnStats"
+                                     Command="{Binding StatsCommand}">
+                            <RadioButton.Style>
+                                <Style TargetType="RadioButton"
+                                       BasedOn="{StaticResource {x:Type ToggleButton}}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="RadioButton">
+                                                <StackPanel Orientation="Horizontal"
+                                                            Cursor="Hand"
+                                                            Background="{TemplateBinding Background}">
+
+                                                    <Image Source="../Images/stats_icon.png"
+                                                           Width="23"
+                                                           Height="23"
+                                                           
+                                                           Margin="30, 10"/>
+
+                                                    <TextBlock Text="Статистика"
+                                                               VerticalAlignment="Center"/>
+
+                                                </StackPanel>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+
+                                    <Style.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="Background" Value="#F9F9F9"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+
+                                </Style>
+                            </RadioButton.Style>
+                        </RadioButton>
+
+                        <RadioButton x:Name="BtnRating"
+                                     Command="{Binding RatingCommand}">
+                            <RadioButton.Style>
+                                <Style TargetType="RadioButton"
+                                       BasedOn="{StaticResource {x:Type ToggleButton}}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="RadioButton">
+                                                <StackPanel Orientation="Horizontal"
+                                                            Cursor="Hand"
+                                                            Background="{TemplateBinding Background}">
+
+                                                    <Image Source="../Images/star_icon.png"
+                                                           Width="23"
+                                                           Height="23"
+                                                           
+                                                           Margin="30, 10"/>
+
+                                                    <TextBlock Text="Рейтинг"
+                                                               VerticalAlignment="Center"/>
+
+                                                </StackPanel>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+
+                                    <Style.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="Background" Value="#F9F9F9"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+
+                                </Style>
+                            </RadioButton.Style>
+                        </RadioButton>
+
+                        <RadioButton x:Name="BtnAppointment"
+                                     Command="{Binding AppointmentCommand}">
+                            <RadioButton.Style>
+                                <Style TargetType="RadioButton"
+                                       BasedOn="{StaticResource {x:Type ToggleButton}}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="RadioButton">
+                                                <StackPanel Orientation="Horizontal"
+                                                            Cursor="Hand"
+                                                            Background="{TemplateBinding Background}">
+
+                                                    <Image Source="../Images/user_icon.png"
+                                                           Width="23"
+                                                           Height="23"
+                                                           
+                                                           Margin="30, 10"/>
+
+                                                    <TextBlock Text="Записать пациента"
+                                                               VerticalAlignment="Center"
+                                                               TextWrapping="Wrap"/>
+
+                                                </StackPanel>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+
+                                    <Style.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="Background" Value="#F9F9F9"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+
+                                </Style>
+                            </RadioButton.Style>
+                        </RadioButton>
+
+                    </StackPanel>
+
+                    <Button x:Name="BtnExit"
+                            Grid.Row="2"
+                            Style="{StaticResource SalmonButton}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="130"
+                            Height="40"
+                            Margin="0, 10"
+                            Click="BtnExit_Click">
+                        <Button.Content>
+                            <Grid>
+                                <Image x:Name="ImgBtn"
+                                       Source="../Images/logout_icon.png"
+                                       Width="25"
+                                       Height="25"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"/>
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+
+                </Grid>
+                
+            </StackPanel>
+            
+        </Grid>
+
+        <Grid x:Name="MainGrid"
+              Grid.Column="1">
+            <Border Background="#F9F9F9"
+                    CornerRadius="30"
+                    Margin="0, 0, -40, 0">
+
+                <Grid>
+                    <ContentControl Margin="15"
+                                    Content="{Binding CurrentView}"/>
+                </Grid>
+                
+            </Border>
+        </Grid>
+        
+    </Grid>
+</Page>

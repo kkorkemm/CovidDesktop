@@ -47,13 +47,16 @@
                         Content="Войти"
                         HorizontalAlignment="Left"
                         Width="130"
-                        Margin="10"/>
+                        Margin="10"
+                        Click="BtnLogin_Click"
+                        IsDefault="True"/>
                 <Button x:Name="BtnCancel"
                         Style="{StaticResource BlueButton}"
                         Content="Отмена"
                         HorizontalAlignment="Right"
                         Width="130"
-                        Margin="10"/>
+                        Margin="10"
+                        Click="BtnCancel_Click"/>
             </WrapPanel>
             
         </StackPanel>
