@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace CovidDesktop.Pages
 {
@@ -39,11 +40,87 @@ namespace CovidDesktop.Pages
             }
 
             ComboDiagramType.SelectedIndex = 0;
+
+            Chart.ChartAreas.Add(new ChartArea("Main"));
+
+            UpdateDiagram();
         }
 
+        /// <summary>
+        /// Обновление диаграмм при изменении параметров
+        /// </summary>
         public void UpdateDiagram()
         {
+            Chart.Series.Clear();
 
+            /// ДИАГРАММА СООТНОШЕНИЕ ПОЛУЧЕННЫХ КОМПОНЕНТОВ
+            if (ComboDiagramType.SelectedIndex == 0)
+            {
+                // настройка диаграммы
+                var currentSeries = new Series("Компоненты") { IsValueShownAsLabel = true };
+                Chart.Series.Add(currentSeries);
+                currentSeries.Points.Clear();
+                currentSeries.ChartType = SeriesChartType.Doughnut;
+
+                // список типов компонентов (1 и 2)
+                var componentTypes = AppData.GetContext().ComponentType.ToList();
+
+
+                foreach(var componentType in componentTypes)
+                {
+                    // для конкретного пункта вакцинации
+                    if (ComboVacPoints.SelectedIndex != 0)
+                    {
+                        var vaccinationPoint = ComboVacPoints.SelectedItem as VaccinationPoint;
+
+                        /// если задан фильтр по датам
+                        var timetables = vaccinationPoint.TimeTable.ToList();
+                        if (DateFrom.SelectedDate != null)
+                            timetables = timetables.Where(p => p.Date >= DateFrom.SelectedDate).ToList();
+                        if (DateTo.SelectedDate != null)
+                            timetables = timetables.Where(p => p.Date <= DateTo.SelectedDate).ToList().ToList();
+
+                        int count = 0;
+                        foreach (var timeTable in timetables)
+                        {
+                            foreach (var appointment in timeTable.Appointment)
+                            {
+                                if (appointment.ComponentTypeID == componentType.ID)
+                                    count++;
+                            }
+                        }
+
+                        currentSeries.Points.AddXY(componentType.Name,count);
+                    }
+                    // для всех пунктов вакцинации
+                    else
+                    {
+                        var allPoints = AppData.GetContext().VaccinationPoint.ToList();
+                        int count = 0;
+
+                        foreach (var point in allPoints)
+                        {
+                            // если задан фильтр по датам
+                            var timetables = point.TimeTable.ToList();
+                            if (DateFrom.SelectedDate != null)
+                                timetables = timetables.Where(p => p.Date >= DateFrom.SelectedDate).ToList();
+                            if (DateTo.SelectedDate != null)
+                                timetables = timetables.Where(p => p.Date <= DateTo.SelectedDate).ToList().ToList();
+
+                            foreach (var timeTable in timetables)
+                            {
+                                foreach (var appointment in timeTable.Appointment)
+                                {
+                                    if (appointment.ComponentTypeID == componentType.ID)
+                                        count++;
+                                }
+                            }
+                        }
+
+                        currentSeries.Points.AddXY(componentType.Name, count);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -51,7 +128,15 @@ namespace CovidDesktop.Pages
         /// </summary>
         private void ComboVacPoints_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            UpdateDiagram();
+        }
 
+        /// <summary>
+        /// При выборе диапазона дат для первой диаграммы
+        /// </summary>
+        private void DateFrom_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateDiagram();
         }
 
         /// <summary>

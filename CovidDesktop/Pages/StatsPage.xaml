@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CovidDesktop.Pages"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:charts="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="StatsPage">
@@ -42,14 +43,16 @@
                         materialDesign:HintAssist.Hint="От"
                         Width="100"
                         VerticalAlignment="Center"
-                        Margin="10"/>
+                        Margin="10"
+                        SelectedDateChanged="DateFrom_SelectedDateChanged"/>
 
             <DatePicker x:Name="DateTo"
                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                         materialDesign:HintAssist.Hint="До"
                         Width="100"
                         VerticalAlignment="Center"
-                        Margin="10"/>
+                        Margin="10"
+                        SelectedDateChanged="DateFrom_SelectedDateChanged"/>
 
             <ComboBox x:Name="ComboPatientsTimeTypes"
                       Style="{StaticResource MaterialDesignComboBox}"
@@ -65,6 +68,17 @@
             </ComboBox>
             
         </WrapPanel>
+
+        <WindowsFormsHost Grid.Row="1"
+                          Margin="10, 10, 50, 10">
+
+            <charts:Chart x:Name="Chart">
+                <charts:Chart.Legends>
+                    <charts:Legend/>
+                </charts:Chart.Legends>
+            </charts:Chart>
+            
+        </WindowsFormsHost>
         
     </Grid>
 </Page>
