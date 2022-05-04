@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 
 namespace CovidDesktop.Pages
 {
+    using Base;
+
     /// <summary>
     /// Логика взаимодействия для TimeTablePage.xaml
     /// </summary>
@@ -23,6 +25,51 @@ namespace CovidDesktop.Pages
         public TimeTablePage()
         {
             InitializeComponent();
+
+            var componentTypes = AppData.GetContext().ComponentType.ToList();
+            componentTypes.Insert(0, new ComponentType { Name = "Все" });
+            ComboComponentTypes.ItemsSource = componentTypes;
+
+            UpdateTimeTable();
+        }
+
+        /// <summary>
+        /// Вывод расписания
+        /// </summary>
+        private void UpdateTimeTable()
+        {
+            var timetable = AppData.GetContext().TimeTable.Where(p => p.VaccinationPointID == AppData.CurrentUser.ID).OrderBy(p => p.Date).ThenBy(p => p.Time).ToList();
+
+            // при использовании фильтров
+            if (ComboComponentTypes.SelectedIndex != 0)
+                timetable = timetable.Where(p => p.ComponentType == (ComboComponentTypes.SelectedItem as ComponentType).Name).ToList();
+            if (DateFrom.SelectedDate != null && DateTo.SelectedDate != null)
+                timetable = timetable.Where(p => p.Date >= DateFrom.SelectedDate && p.Date <= DateTo.SelectedDate).ToList();
+            if (DateFrom.SelectedDate != null)
+                timetable = timetable.Where(p => p.Date >= DateFrom.SelectedDate).ToList();
+            if (DateTo.SelectedDate != null)
+                timetable = timetable.Where(p => p.Date <= DateTo.SelectedDate).ToList();
+            if (DateFrom.SelectedDate == null && DateTo.SelectedDate == null)
+                timetable = timetable.Where(p => p.Date >= DateTime.Now).ToList();
+
+            ListTimeTable.ItemsSource = timetable;
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListTimeTable.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Date");
+            view.GroupDescriptions.Add(groupDescription);
+        }
+
+        /// <summary>
+        /// Использование фильтров
+        /// </summary>
+        private void DateTo_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateTimeTable();
+        }
+
+        private void BtnAddTimeTable_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

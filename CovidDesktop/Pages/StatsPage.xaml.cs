@@ -121,6 +121,48 @@ namespace CovidDesktop.Pages
                     }
                 }
             }
+            /// ДИАГРАММА ЧАСТОТЫ ПОСЕЩЕНИЯ
+            else
+            {
+                // настройка диаграммы
+                var currentSeries = new Series("Частота записей \n на вакцинацию") { IsValueShownAsLabel = true };
+                Chart.Series.Add(currentSeries);
+                currentSeries.Points.Clear();
+                currentSeries.ChartType = SeriesChartType.Column;
+
+                var appoitments = AppData.GetContext().Appointment.ToList();
+
+                /// для отдельного пункта вакцинации
+                if (ComboVacPoints.SelectedIndex != 0)
+                {
+                    var point = ComboVacPoints.SelectedItem as VaccinationPoint;
+                    appoitments = AppData.GetContext().Appointment.Where(p => p.TimeTable.VaccinationPointID == point.ID).ToList();    
+                }
+
+                // если установлены фильтры по дате
+                if (ComboPatientsTimeTypes.SelectedIndex == 0)
+                    appoitments = appoitments.Where(p => (p.TimeTable.Date - DateTime.Now).Days <= 7).ToList();
+                if (ComboPatientsTimeTypes.SelectedIndex == 1)
+                    appoitments = appoitments.Where(p => (p.TimeTable.Date - DateTime.Now).Days <= 31).ToList();
+                if (ComboPatientsTimeTypes.SelectedIndex == 2)
+                    appoitments = appoitments.Where(p => p.TimeTable.Date.Year - DateTime.Now.Year <= 1).ToList();
+
+                var dates = appoitments.Select(p => p.TimeTable.Date).Distinct().ToList();
+
+
+                foreach (var date in dates)
+                {
+                    int count = 0;
+
+                    foreach (var appointment in appoitments)
+                    {
+                        if (appointment.TimeTable.Date == date)
+                            count++;
+                    }
+
+                    currentSeries.Points.AddXY(date.Date, count);
+                }
+            }
         }
 
         /// <summary>
@@ -156,6 +198,8 @@ namespace CovidDesktop.Pages
                 DateTo.Visibility = Visibility.Collapsed;
                 ComboPatientsTimeTypes.Visibility = Visibility.Visible;
             }
+
+            UpdateDiagram();
         }
     }
 }
