@@ -6,11 +6,14 @@
         xmlns:local="clr-namespace:CovidDesktop"
         mc:Ignorable="d"
         Title="{Binding ElementName=MainFrame, Path=Content.Title}" 
-        Height="570" Width="1000"
+        Height="570" Width="1050"
+        MinHeight="300" MinWidth="550"
         WindowStartupLocation="CenterScreen"
-        Icon="Images/icon.ico">
+        Icon="Images/icon.ico"
+        Closing="Window_Closing">
     <Grid>
         <Frame x:Name="MainFrame"
-               NavigationUIVisibility="Hidden"/>
+               NavigationUIVisibility="Hidden"
+               Margin="0, 0, 40, 0"/>
     </Grid>
 </Window>

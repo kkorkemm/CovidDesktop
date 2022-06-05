@@ -26,6 +26,7 @@ namespace CovidDesktop.Pages
         {
             InitializeComponent();
 
+            // Типы компонентов
             var componentTypes = AppData.GetContext().ComponentType.ToList();
             componentTypes.Insert(0, new ComponentType { Name = "Все" });
             ComboComponentTypes.ItemsSource = componentTypes;
@@ -38,6 +39,7 @@ namespace CovidDesktop.Pages
         /// </summary>
         private void UpdateTimeTable()
         {
+            // Расписание
             var timetable = AppData.GetContext().TimeTable.Where(p => p.VaccinationPointID == AppData.CurrentUser.ID).OrderBy(p => p.Date).ThenBy(p => p.Time).ToList();
 
             // при использовании фильтров
@@ -67,9 +69,25 @@ namespace CovidDesktop.Pages
             UpdateTimeTable();
         }
 
+        /// <summary>
+        /// Добавления элемента расписания
+        /// </summary>
         private void BtnAddTimeTable_Click(object sender, RoutedEventArgs e)
         {
+            Windows.AddTimeTableWindow addWindow = new Windows.AddTimeTableWindow();
+            addWindow.ShowDialog();
 
+            UpdateTimeTable();
+        }
+
+        private void ListTimeTable_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var item = ItemsControl.ContainerFromElement(ListTimeTable, e.OriginalSource as DependencyObject) as ListViewItem;
+
+            if (item != null)
+            {
+                Navigation.SubFrame.Navigate(new TimeTableDetailedPage(item.DataContext as TimeTable));
+            }
         }
     }
 }

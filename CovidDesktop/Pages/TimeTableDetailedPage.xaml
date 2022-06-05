@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CovidDesktop.Pages"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TimeTableDetailedPage">
@@ -14,22 +15,112 @@
             <RowDefinition Height="auto"/>
             <RowDefinition/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <WrapPanel Orientation="Horizontal">
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="{Binding Date, StringFormat=dd.MM.yyyy}"/>
+                <TextBlock Text="     "/>
                 <TextBlock Text="{Binding Time}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal"
                         Margin="10">
-                <TextBlock Text="Спутник V"/>
+                <TextBlock Text="Спутник V  "/>
                 <TextBlock Text="{Binding ComponentType}"/>
             </StackPanel>
             
         </WrapPanel>
-        
+
+        <ComboBox x:Name="ComboDoctors"
+                  DisplayMemberPath="FullName"
+                  Margin="10"
+                  Grid.Row="1"
+                  Width="350"
+                  HorizontalAlignment="Left"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                  materialDesign:HintAssist.Hint="Врач"
+                  SelectedItem="{Binding Doctor}"/>
+
+        <DataGrid x:Name="GridPatients"
+                  Grid.Row="2"
+                  Margin="10"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  LoadingRow="GridPatients_LoadingRow">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ФИО пациента"
+                                    Binding="{Binding Patient.FullName}"
+                                    Width="*"/>
+                <DataGridTextColumn Header="Телефон пациента"
+                                    Binding="{Binding Patient.Telephone}"
+                                    Width="*"/>
+                <DataGridTextColumn Header="Дата рождения пациента"
+                                    Binding="{Binding Patient.DateOfBirth, StringFormat=dd.MM.yyyy}"
+                                    Width="*"/>
+                <DataGridTemplateColumn Header="Компонент получен?">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="BtnReceived"
+                                    Content="Вакцинирован"
+                                    Click="BtnReceived_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Подробнее о пациенте">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="BtnShow"
+                                    Content="Просмотр"
+                                    Click="BtnShow_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Отменить запись">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="BtnDelete"
+                                    Content="Отменить"
+                                    Click="BtnDelete_Click"
+                                    Background="{StaticResource Salmon}"
+                                    BorderBrush="Transparent"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            
+        </DataGrid>
+
+        <WrapPanel Orientation="Horizontal"
+                   HorizontalAlignment="Left"
+                   Grid.Row="3"
+                   x:Name="PanelButtons">
+
+            <Button x:Name="BtnAddPatient"
+                    Content="Добавить пациента"
+                    Width="200"
+                    Margin="10"
+                    Click="BtnAddPatient_Click"
+                    Style="{StaticResource AquamarineButton}"/>
+
+            <Button x:Name="BtnSave"
+                    Content="Сохранить изменения"
+                    Width="200"
+                    Margin="10"
+                    Click="BtnSave_Click"
+                    Style="{StaticResource AquamarineButton}"/>
+            
+            <Button x:Name="BtnBack"
+                    Content="Назад"
+                    Width="200"
+                    Margin="10"
+                    Click="BtnBack_Click"
+                    Style="{StaticResource BlueButton}"/>
+
+        </WrapPanel>
+
     </Grid>
 </Page>

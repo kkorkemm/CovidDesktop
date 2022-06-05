@@ -35,7 +35,7 @@
                       VerticalAlignment="Bottom"
                       SelectionChanged="ComboDiagramType_SelectionChanged">
                 <ComboBoxItem Content="Компонент"/>
-                <ComboBoxItem Content="Количество пациентов"/>
+                <ComboBoxItem Content="Записи"/>
             </ComboBox>
 
             <DatePicker x:Name="DateFrom"
@@ -59,9 +59,9 @@
                       Margin="10"
                       Width="150"
                       VerticalAlignment="Bottom"
-                      Visibility="Collapsed">
-                <ComboBoxItem Content="Последние 7 дней"
-                              IsSelected="True"/>
+                      Visibility="Collapsed"
+                      SelectionChanged="ComboPatientsTimeTypes_SelectionChanged">
+                <ComboBoxItem Content="Последние 7 дней"/>
                 <ComboBoxItem Content="Последний месяц"/>
                 <ComboBoxItem Content="Последний год"/>
                 <ComboBoxItem Content="За все время"/>
@@ -70,7 +70,7 @@
         </WrapPanel>
 
         <WindowsFormsHost Grid.Row="1"
-                          Margin="10, 10, 50, 10">
+                          Margin="10">
 
             <charts:Chart x:Name="Chart">
                 <charts:Chart.Legends>

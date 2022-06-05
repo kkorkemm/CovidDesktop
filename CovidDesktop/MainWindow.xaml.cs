@@ -26,5 +26,13 @@ namespace CovidDesktop
             MainFrame.Navigate(new Pages.LoginPage());
             Navigation.MainFrame = MainFrame;
         }
+
+        /// <summary>
+        /// Закрытие всех дополнительных окон
+        /// </summary>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            App.Current.Shutdown();
+        }
     }
 }

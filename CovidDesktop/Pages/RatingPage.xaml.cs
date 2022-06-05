@@ -26,6 +26,7 @@ namespace CovidDesktop.Pages
         {
             InitializeComponent();
 
+            // Список пунктов вакцинации
             var points = AppData.GetContext().VaccinationPoint.Where(p => p.UserRoleID != 1).ToList();
             ComboVacPoints.ItemsSource = points;
             ComboVacPoints.SelectedIndex = 0;

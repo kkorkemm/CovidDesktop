@@ -44,5 +44,7 @@ namespace CovidDesktop.Base
                 }
             }
         }
+
+        public string FullInfo => PatientCount + "  " + Date.ToString("dd.MM.yyyy") + "  " + Time.ToString();
     }
 }

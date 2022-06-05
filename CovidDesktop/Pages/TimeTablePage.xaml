@@ -11,71 +11,89 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="3.5*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <ListView Margin="10"
-                  x:Name="ListTimeTable"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Border Background="#E7F2F8"
+            <ListView Margin="10"
+                  x:Name="ListTimeTable"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  PreviewMouseDown="ListTimeTable_PreviewMouseDown">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#E7F2F8"
                             CornerRadius="10"
                             Margin="5"
                             Padding="5">
-                        <Grid Margin="8">
+                            <Grid Margin="8">
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
 
-                            <StackPanel VerticalAlignment="Center"
+                                <StackPanel VerticalAlignment="Center"
                                         Margin="3">
-                                <TextBlock Text="{Binding Time}"/>
-                                <TextBlock Text="{Binding ComponentType}"
+                                    <TextBlock Text="{Binding Time}"/>
+                                    <TextBlock Text="{Binding ComponentType}"
                                            FontWeight="Bold"/>
-                                <TextBlock Text="{Binding Doctor.FullName}"/>
-                                <TextBlock Text="{Binding PatientCount}"
+                                    <TextBlock Text="{Binding Doctor.FullName}"/>
+                                    <TextBlock Text="{Binding PatientCount}"
                                            Foreground="{Binding Color}"
                                            FontWeight="Bold"/>
-                            </StackPanel>
+                                </StackPanel>
 
-                            <Image Grid.Column="1"
+                                <Image Grid.Column="1"
                                    VerticalAlignment="Center"
                                    Source="../Images/next_icon.png"
                                    Width="30"
                                    Margin="3"
                                    Height="30"/>
 
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
 
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            
-            <ListView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}"
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"
                                        Margin="10"
                                        FontWeight="Bold"
                                        FontSize="16"/>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </ListView.GroupStyle>
-            
-        </ListView>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
 
+            </ListView>
+
+            <Button x:Name="BtnAddTimeTable"
+                    Style="{StaticResource AquamarineButton}"
+                    Content="Создать элемент расписания"
+                    Click="BtnAddTimeTable_Click"
+                    Margin="20"
+                    Width="260"
+                    Grid.Row="1"
+                    HorizontalAlignment="Left"/>
+            
+        </Grid>
+        
         <Grid Grid.Column="1"
                     Margin="10">
 
@@ -86,7 +104,8 @@
             
             <Calendar x:Name="TheCalendar"
                       Style="{StaticResource MaterialDesignCalendarPortraitForeground}"
-                      Language="ru-RU"/>
+                      Language="ru-RU"
+                      Margin="10"/>
 
             <WrapPanel Orientation="Horizontal"
                    HorizontalAlignment="Left"
@@ -107,20 +126,14 @@
                         materialDesign:HintAssist.Hint="От"
                         Margin="10"
                         SelectedDateChanged="DateTo_SelectedDateChanged"
-                        Width="150"/>
+                        Width="100"/>
 
                 <DatePicker x:Name="DateTo"
                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                         materialDesign:HintAssist.Hint="До"
                         Margin="10"
                         SelectedDateChanged="DateTo_SelectedDateChanged"
-                        Width="150"/>
-
-                <Button x:Name="BtnAddTimeTable"
-                    Style="{StaticResource AquamarineButton}"
-                    Content="Создать элемент расписания"
-                    Click="BtnAddTimeTable_Click"
-                    Margin="10"/>
+                        Width="100"/>
 
             </WrapPanel>
         </Grid>

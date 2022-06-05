@@ -13,6 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -40,16 +41,43 @@
                    Grid.Row="1"
                    Margin="10"/>
 
-        
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>    
-            
-            
-            
-        </Grid>
+        <Button x:Name="BtnShow"
+                Content="Подробнее о пациенте"
+                Click="BtnShow_Click"
+                Style="{StaticResource BlueButton}"
+                Grid.Row="2"
+                HorizontalAlignment="Left"
+                Margin="10"
+                Visibility="Collapsed"
+                Width="250" Cursor="Hand"/>
+
+        <StackPanel Grid.Row="3"
+                    Margin="10">
+
+            <ComboBox x:Name="ComboComponentTypes"
+                      DisplayMemberPath="Name"
+                      Width="400"
+                      HorizontalAlignment="Left"
+                      Margin="10"
+                      materialDesign:HintAssist.Hint="Компонент"
+                      SelectionChanged="ComboComponentTypes_SelectionChanged"/>
+
+            <ComboBox x:Name="ComboTimeTable"
+                      DisplayMemberPath="FullInfo"
+                      Width="400"
+                      materialDesign:HintAssist.Hint="Расписание"
+                      HorizontalAlignment="Left"
+                      Margin="10"/>
+
+            <Button x:Name="BtnSave"
+                    Content="Записать пациента"
+                    Click="BtnSave_Click"
+                    Margin="10"
+                    Style="{StaticResource AquamarineButton}"
+                    Width="300"
+                    HorizontalAlignment="Left"/>
+
+        </StackPanel>
         
     </Grid>
 </Page>

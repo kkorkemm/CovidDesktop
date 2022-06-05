@@ -40,6 +40,7 @@ namespace CovidDesktop.Pages
             }
 
             ComboDiagramType.SelectedIndex = 0;
+            ComboPatientsTimeTypes.SelectedIndex = 0;
 
             Chart.ChartAreas.Add(new ChartArea("Main"));
 
@@ -177,6 +178,14 @@ namespace CovidDesktop.Pages
         /// При выборе диапазона дат для первой диаграммы
         /// </summary>
         private void DateFrom_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateDiagram();
+        }
+
+        /// <summary>
+        /// При выборе варианта диапазона дат для второй диаграммы
+        /// </summary>
+        private void ComboPatientsTimeTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateDiagram();
         }

@@ -1,0 +1,55 @@
+﻿<Window x:Class="CovidDesktop.Windows.AddTimeTableWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CovidDesktop.Windows"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Добавление элемента расписания" 
+        Height="250" Width="400"
+        Icon="../Images/icon.ico">
+    
+    <Grid VerticalAlignment="Center"
+          Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <WrapPanel Orientation="Horizontal">
+            <DatePicker x:Name="TheDatePicker"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                        materialDesign:HintAssist.Hint="Дата"
+                        Width="150"
+                        Margin="10"
+                        Language="ru-RU"/>
+            <materialDesign:TimePicker x:Name="TheTimePicker"
+                                       Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
+                                       materialDesign:HintAssist.Hint="Время"
+                                       Width="150"
+                                       Margin="10"
+                                       Language="ru-RU"
+                                       Is24Hours="True"/>
+
+        </WrapPanel>
+
+        <ComboBox x:Name="ComboDoctor"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                  materialDesign:HintAssist.Hint="Врач"
+                  Margin="10"
+                  Grid.Row="1"
+                  DisplayMemberPath="FullName"
+                  SelectedItem="{Binding Doctor}"/>
+
+        <Button x:Name="BtnAddTimeTable"
+                Content="Создать элемент расписания"
+                Click="BtnAddTimeTable_Click"
+                Grid.Row="2"
+                Style="{StaticResource AquamarineButton}"
+                Margin="10"/>
+
+    </Grid>
+</Window>
