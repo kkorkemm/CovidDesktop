@@ -72,7 +72,7 @@
                     <GroupStyle>
                         <GroupStyle.HeaderTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}"
+                                <TextBlock Text="{Binding Name, StringFormat={}{0:dd.MM.yyyy}}"
                                        Margin="10"
                                        FontWeight="Bold"
                                        FontSize="16"/>

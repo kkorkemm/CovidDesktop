@@ -52,7 +52,7 @@ namespace CovidDesktop.Pages
             if (DateTo.SelectedDate != null)
                 timetable = timetable.Where(p => p.Date <= DateTo.SelectedDate).ToList();
             if (DateFrom.SelectedDate == null && DateTo.SelectedDate == null)
-                timetable = timetable.Where(p => p.Date >= DateTime.Now).ToList();
+                timetable = timetable.Where(p => p.Date.Date >= DateTime.Now.Date).ToList();
 
             ListTimeTable.ItemsSource = timetable;
 

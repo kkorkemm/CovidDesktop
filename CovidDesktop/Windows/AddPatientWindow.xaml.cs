@@ -35,9 +35,7 @@ namespace CovidDesktop.Windows
             if (CurrentTimetable.ComponentType != "Нет данных")
             {
                 ComboComponentTypes.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
+
                 if (CurrentTimetable.ComponentType == "I компонент")
                 {
                     ComboComponentTypes.SelectedIndex = 0;
@@ -46,6 +44,10 @@ namespace CovidDesktop.Windows
                 {
                     ComboComponentTypes.SelectedIndex = 1;
                 }
+            }
+            else
+            {
+                
             }
         }
 
